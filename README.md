@@ -285,7 +285,7 @@ A continuación se muestran las vistas principales del sistema **SMAdmin**, dise
 ---
 
 ### 🔍 Filtro y coincidencias de productos
-![Filtro](filtro_obd.jpg)
+![Filtro](filtro_odb.jpg)
 
 ---
 
