@@ -295,5 +295,5 @@ A continuación se muestran las vistas principales del sistema **SMAdmin**, dise
 ---
 
 ### ⚙️ Edición de cuentas de usuario
-![Edición de cuentas](AcountEditing_obd.png)
+![Edición de cuentas](AcountEditing_obd.jpg)
 
