@@ -67,4 +67,197 @@ La siguiente tabla muestra el análisis de priorización de los requisitos funci
 | RF11  | Generación de reportes de ventas                     | Media | Media  | Baja        | Alta        | Media            |
 | RF12  | Validación de archivos Excel                         | Alta  | Media  | Alta        | Alta        | Alta             |
 
+## 📌 Casos de Uso de Alta Prioridad
+
+### CU01 – Gestión de usuarios
+
+**Nombre:** Gestión de usuarios  
+**Actor principal:** Administrador  
+**Descripción:** Permite crear, editar o eliminar usuarios, así como asignarles roles.  
+**Precondición:** El administrador ha iniciado sesión.
+
+#### 🔄 Flujo principal:
+
+1. El administrador accede al módulo de usuarios.  
+2. Selecciona la acción (crear, editar, eliminar).  
+3. Llena los campos requeridos (nombre, correo, rol).  
+4. El sistema valida los datos.  
+5. Se guarda la acción en el historial.
+
+#### 📈 Diagrama de Actividad:
+
+![Diagrama de Actividad - Gestión de Usuarios](gestion_de_usuarios.png)
+
+**Figura 3.** Diagrama de actividad para el caso de uso "Gestión de usuarios".
+
+#### ✅ Postcondición:
+El usuario queda registrado, actualizado o eliminado.
+
+#### ⚠️ Excepciones:
+
+- Faltan campos requeridos  
+- Formato de correo no válido  
+- Rol inválido
+
+---
+
+### CU02 – Carga de condicionantes de búsqueda
+
+**Actor principal:** Administrador  
+**Descripción:** El sistema permite subir un archivo `.xlsx` que contiene las palabras clave para relacionar productos.
+
+#### 🔄 Flujo principal:
+
+1. El usuario entra al módulo de carga.  
+2. Selecciona un archivo Excel válido.  
+3. El sistema valida columnas esperadas.  
+4. Se procesan las filas del archivo.  
+5. Se muestra resumen de datos cargados.
+
+#### ⚠️ Excepciones:
+
+- Archivo con formato incorrecto → se rechaza.
+
+---
+
+### CU03 – Procesamiento de comentarios
+
+**Actor principal:** Sistema  
+**Descripción:** Analiza comentarios provenientes de redes sociales y los compara con las condicionantes para detectar interés en productos.
+
+#### 🔄 Flujo principal:
+
+1. Se importan comentarios desde redes sociales.  
+2. El sistema analiza cada comentario.  
+3. Se detectan coincidencias con palabras clave.  
+4. Se registra la relación producto-cliente.
+
+---
+
+### CU04 – Identificación automática de clientes
+
+**Actor principal:** Sistema  
+**Descripción:** Al detectar un comentario relacionado con un producto, el sistema crea un nuevo cliente potencial.
+
+#### 🔄 Flujo principal:
+
+1. El sistema identifica perfil de Facebook del comentario.  
+2. Genera ID único para el cliente.  
+3. Asocia productos detectados.
+
+---
+
+### CU05 – Edición de pedidos
+
+**Actor principal:** Vendedor  
+**Descripción:** El vendedor accede al pedido de un cliente y modifica cantidades, productos o aplica descuentos.
+
+#### 🔄 Flujo principal:
+
+1. El vendedor entra a la sección de pedidos.  
+2. Selecciona pedido del cliente.  
+3. Edita cantidades o aplica descuento.  
+4. El sistema valida límites.  
+5. Guarda los cambios y actualiza historial.
+
+---
+
+### CU06 – Generación y descarga de cotizaciones
+
+**Actor principal:** Vendedor  
+**Descripción:** Genera una cotización en PDF o Excel con el detalle del pedido.
+
+#### 🔄 Flujo principal:
+
+1. El vendedor selecciona cliente.  
+2. Confirma productos a incluir.  
+3. Elige formato (PDF o Excel).  
+4. El sistema genera archivo con subtotal, descuento y total.  
+5. El archivo se descarga.
+
+## 📚 Reglas de Negocio
+
+A continuación se presentan las reglas de negocio que rigen el funcionamiento interno del sistema **SMAdmin**:
+
+---
+
+### 🛡️ RN01 – Control de Accesos
+Solo los usuarios registrados con rol de **Administrador** podrán:
+- Registrar nuevos usuarios  
+- Asignar roles  
+- Subir condicionantes de búsqueda  
+- Asignar vendedores a clientes  
+- Descargar reportes globales de ventas  
+
+---
+
+### 👤 RN02 – Roles del sistema
+- El **Administrador** tiene acceso completo al sistema.  
+- El **Vendedor** solo puede acceder a los clientes y pedidos que le han sido asignados.  
+
+---
+
+### 📥 RN03 – Validación de archivos
+Los archivos `.xlsx` cargados deben cumplir con el formato predefinido, que incluye al menos:
+- Número de pieza  
+- Nombre del producto (código establecido)  
+- Costo por pieza  
+- Cantidad inicial, vendida y restante (si aplica)  
+
+---
+
+### 🤖 RN04 – Asignación automática de clientes
+Cada vez que se identifica un comentario válido en redes sociales que coincide con una condicionante de búsqueda:
+- Se generará un cliente nuevo automáticamente  
+- Se le asignará un ID único  
+- El cliente quedará “pendiente de asignación de vendedor”  
+
+---
+
+### 🔒 RN05 – Inmutabilidad del historial
+Todas las modificaciones realizadas en el sistema deben registrarse en un historial que:
+- No puede ser editado ni borrado  
+- Incluye: usuario, fecha/hora, acción, entidad afectada, valores antes/después  
+
+---
+
+### 💸 RN06 – Aplicación de descuentos
+Los descuentos aplicados a las cotizaciones **no podrán superar el 8% del total**, salvo autorización del administrador.
+
+---
+
+### 📄 RN07 – Generación de cotización
+Una cotización solo se podrá generar si:
+- El cliente tiene al menos 1 producto válido  
+- Todos los productos tienen cantidad y precio unitario definidos  
+
+---
+
+### 🧮 RN08 – Cálculo de totales
+El cálculo del total de una cotización debe considerar:
+
+- **Subtotal** = SUMA(cantidad × precio_unitario)  
+- **Descuento** = Subtotal × (porcentaje_descuento)  
+- **Total** = Subtotal - Descuento  
+
+---
+
+### 📥 RN09 – Descarga de cotización
+La cotización podrá ser descargada en formato **PDF** o **Excel**, y debe contener:
+- Nombre del cliente  
+- Productos seleccionados  
+- Costo unitario  
+- Cantidad  
+- Descuento aplicado  
+- Total  
+
+---
+
+### 📊 RN10 – Generación de reportes
+Los reportes de ventas deberán incluir:
+- Rango de fechas  
+- Vendedor responsable  
+- Total vendido  
+- Número de pedidos realizados  
+
 
