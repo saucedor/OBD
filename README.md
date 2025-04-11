@@ -17,7 +17,7 @@ Nuestro objetivo principal fue aplicar los principios de análisis y diseño de 
 
 El siguiente diagrama muestra cómo interactúan los distintos actores con el **Sistema de Gestión de Pedidos y Clientes para Ventas en Redes Sociales (SMAdmin)**. Este sistema centraliza la información proveniente de redes sociales, clientes, vendedores y administradores, y facilita la gestión de pedidos, descuentos, reportes y análisis.
 
-
+![Diagrama de Contexto](diagrama_de_contexto.png)
 
 **Figura 1.** Diagrama de Contexto – desarrollado por César Ignacio Saucedo.
 
