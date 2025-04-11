@@ -265,7 +265,7 @@ Los reportes de ventas deberán incluir:
 A continuación se muestran las vistas principales del sistema **SMAdmin**, diseñadas como parte del prototipo funcional. Estas pantallas reflejan los módulos claves del sistema, alineados con los casos de uso y reglas de negocio definidas.
 
 ### 🖥️ Dashboard principal
-![Dashboard](dashboard_obd.jpg)
+![Dashboard](dashboard.obd.jpg)
 
 ---
 
@@ -297,3 +297,68 @@ A continuación se muestran las vistas principales del sistema **SMAdmin**, dise
 ### ⚙️ Edición de cuentas de usuario
 ![Edición de cuentas](AcountEditing_obd.jpg)
 
+## 📡 Plan de Comunicación – Equipo OBD
+
+Con el fin de asegurar una colaboración efectiva, una coordinación clara y un flujo de trabajo fluido entre los miembros del equipo **OBD**, se establece el siguiente plan de comunicación:
+
+---
+
+### 1. Canales Principales
+
+#### 🟢 WhatsApp (Canal principal)
+- Vía principal de comunicación diaria.  
+- Para mensajes rápidos, avisos, dudas operativas o coordinación inmediata.  
+- Se espera que los mensajes sean claros y directos.  
+- ⏱️ Tiempo de respuesta ideal: dentro de las siguientes 2 horas (en horario activo del equipo).
+
+#### 🎥 Discord (Comunicación directa virtual)
+- Utilizado para reuniones virtuales (videollamadas).  
+- Ideal para toma de decisiones, resolución de dudas complejas o trabajo colaborativo en tiempo real.  
+- Las reuniones serán acordadas con anticipación y se procurará respetar los horarios establecidos.
+
+#### 🏫 Sesiones de clase (Comunicación presencial)
+- Espacio clave para resolver dudas generales, compartir avances o coordinar tareas complejas.  
+- También se usarán para reforzar acuerdos y evaluar el progreso del grupo.
+
+---
+
+### 2. Normas de Comunicación
+
+- Mantener una comunicación **respetuosa, asertiva y colaborativa**.  
+- Evitar mensajes innecesarios fuera de horario, salvo que sean urgentes.  
+- Confirmar la recepción de mensajes importantes (emoji, texto corto o respuesta).  
+- Ser **breves y precisos**, especialmente en WhatsApp.
+
+---
+
+### 3. Frecuencia y Coordinación
+
+- 📆 **Actualización de avances:** al menos una vez por semana vía WhatsApp.  
+- 📞 **Reuniones por Discord:** según necesidad o mínimo una vez por semana (día y hora por definir).  
+- ✅ **Evaluación de tareas y pendientes:** durante sesiones de clase o al término de cada etapa clave del proyecto.
+
+## 🧑‍💻 Guía de estilo de codificación
+
+Para mantener coherencia dentro de nuestro código y nuestro trabajo implementaremos varias estrategias/normas dentro de nuestro código:
+
+**Nombres:** Los nombres serán simples y fáciles de entender utilizando `lowerCameCase` para nombrar las cosas.  
+**Indentación:** Mantener una indentación coherente que permite a cualquier persona leer el código y entenderlo.  
+**Comentarios:** Se utilizarán comentarios donde sea necesario para ayudar tanto a los compañeros de equipo como a cualquier persona que lea el código.  
+**Coherencia:** Lo más importante dentro de nuestro código para nosotros va ser la coherencia y lo fácil que es para entender.
+
+---
+
+## 🗓️ Plan de trabajo actualizado y aprendizaje adquirido
+
+Nuestro plan de trabajo se enfoca en la eficiencia del proyecto y asegura que cada uno de los integrantes del equipo tenga un trabajo por completar para que se siga mejorando el proyecto. Estos son los pasos de nuestro plan de trabajo:
+
+- Plan de comunicación  
+- Análisis de requisitos y normas  
+- Gestión de usuarios  
+- Creación de el sitio ideal (Idea)  
+- Creación del diseño del sitio  
+- Creación del sitio (separando trabajos)  
+- Reuniones frecuentes  
+- Revisar el proyecto juntos
+
+El aprendizaje adquirido que logramos es aprender la importancia de la comunicación y aprender cómo encontrar los requisitos dentro de un trabajo. La empresa solo nos presentó unos requisitos para su sitio, unas cosas que les gustaría implementar y cómo funciona su negocio. De esa información nuestro equipo lograra implementar un proyecto completo de un sitio capaz de ayudar a una empresa que apenas está creciendo para tener una plataforma personalizada y útil para su día a día. Actualmente hemos avanzado mucho en la creación del sitio destacando sus requisitos, modelando el sitio, modelando casos de usos y aprendiendo e implementando buenas prácticas de codificación.
