@@ -265,32 +265,32 @@ Los reportes de ventas deberán incluir:
 A continuación se muestran las vistas principales del sistema **SMAdmin**, diseñadas como parte del prototipo funcional. Estas pantallas reflejan los módulos claves del sistema, alineados con los casos de uso y reglas de negocio definidas.
 
 ### 🖥️ Dashboard principal
-![Dashboard](ruta/a/dashboard_obd.png)
+![Dashboard](ruta/a/dashboard_obd.jpg)
 
 ---
 
 ### 👥 Base de datos de clientes
-![Clientes](ruta/a/client_database_obd.png)
+![Clientes](ruta/a/client_database_obd.jpg)
 
 ---
 
 ### 🧑‍💼 Gestión de vendedores
-![Vendedores](ruta/a/vendedores_obd.png)
+![Vendedores](ruta/a/vendedores_obd.jpg)
 
 ---
 
 ### 💬 Comentarios de redes sociales
-![Comentarios](ruta/a/comments_obd.png)
+![Comentarios](ruta/a/comments_obd.jpg)
 
 ---
 
 ### 🔍 Filtro y coincidencias de productos
-![Filtro](ruta/a/filtro_obd.png)
+![Filtro](ruta/a/filtro_obd.jpg)
 
 ---
 
 ### 📜 Historial de modificaciones
-![Historial](ruta/a/historial_obd.png)
+![Historial](ruta/a/historial_obd.jpg)
 
 ---
 
