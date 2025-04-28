@@ -13,7 +13,7 @@ Este proyecto fue desarrollado como parte del curso de Ingeniería de Software p
 
 Nuestro objetivo principal fue aplicar los principios de análisis y diseño de software para construir un sistema robusto, escalable y fácil de mantener, documentado de forma completa en la guía del proyecto incluida.
 
-## 📊 Diagrama de Contexto
+## Diagrama de Contexto
 
 El siguiente diagrama muestra cómo interactúan los distintos actores con el **Sistema de Gestión de Pedidos y Clientes para Ventas en Redes Sociales (SMAdmin)**. Este sistema centraliza la información proveniente de redes sociales, clientes, vendedores y administradores, y facilita la gestión de pedidos, descuentos, reportes y análisis.
 
@@ -21,7 +21,7 @@ El siguiente diagrama muestra cómo interactúan los distintos actores con el **
 
 **Figura 1.** Diagrama de Contexto – desarrollado por César Ignacio Saucedo.
 
-## ✅ Requisitos Funcionales
+## Requisitos Funcionales
 
 A continuación se listan los requisitos funcionales definidos para el sistema **SMAdmin**. Estos requisitos representan las capacidades clave que el sistema debe cumplir para satisfacer las necesidades organizacionales:
 
@@ -40,7 +40,7 @@ A continuación se listan los requisitos funcionales definidos para el sistema *
 | RF11  | Generación de reportes de ventas              | Producir reportes que incluyan: ventas por vendedor, pedidos por día, totales con y sin descuento. |
 | RF12  | Validación y estructura de archivos Excel     | Validar la estructura y contenido de cada archivo Excel antes de ser procesado, rechazando los que no cumplan el formato requerido. |
 
-## 🧩 Diagrama de Casos de Uso
+## Diagrama de Casos de Uso
 
 El siguiente diagrama representa las principales interacciones entre los actores del sistema **SMAdmin** y sus funcionalidades clave. Se identifican los casos de uso necesarios para cubrir los requisitos funcionales del sistema de gestión de pedidos y clientes para ventas en redes sociales.
 
@@ -48,7 +48,7 @@ El siguiente diagrama representa las principales interacciones entre los actores
 
 **Figura 2.** Diagrama de Casos de Uso – elaborado para representar la estructura funcional del sistema.
 
-## 🧮 Tabla de Priorización de Requisitos Funcionales
+## Tabla de Priorización de Requisitos Funcionales
 
 La siguiente tabla muestra el análisis de priorización de los requisitos funcionales del sistema **SMAdmin**, considerando los criterios de valor, riesgo, complejidad y estabilidad. La prioridad global se establece con base en estos factores para facilitar la planeación del desarrollo.
 
@@ -67,7 +67,7 @@ La siguiente tabla muestra el análisis de priorización de los requisitos funci
 | RF11  | Generación de reportes de ventas                     | Media | Media  | Baja        | Alta        | Media            |
 | RF12  | Validación de archivos Excel                         | Alta  | Media  | Alta        | Alta        | Alta             |
 
-## 📌 Casos de Uso de Alta Prioridad
+## Casos de Uso de Alta Prioridad
 
 ### CU01 – Gestión de usuarios
 
@@ -76,7 +76,7 @@ La siguiente tabla muestra el análisis de priorización de los requisitos funci
 **Descripción:** Permite crear, editar o eliminar usuarios, así como asignarles roles.  
 **Precondición:** El administrador ha iniciado sesión.
 
-#### 🔄 Flujo principal:
+#### Flujo principal:
 
 1. El administrador accede al módulo de usuarios.  
 2. Selecciona la acción (crear, editar, eliminar).  
@@ -84,16 +84,16 @@ La siguiente tabla muestra el análisis de priorización de los requisitos funci
 4. El sistema valida los datos.  
 5. Se guarda la acción en el historial.
 
-#### 📈 Diagrama de Actividad:
+#### Diagrama de Actividad:
 
 ![Diagrama de Actividad - Gestión de Usuarios](gestion_de_usuarios.png)
 
 **Figura 3.** Diagrama de actividad para el caso de uso "Gestión de usuarios".
 
-#### ✅ Postcondición:
+#### Postcondición:
 El usuario queda registrado, actualizado o eliminado.
 
-#### ⚠️ Excepciones:
+#### Excepciones:
 
 - Faltan campos requeridos  
 - Formato de correo no válido  
@@ -106,7 +106,7 @@ El usuario queda registrado, actualizado o eliminado.
 **Actor principal:** Administrador  
 **Descripción:** El sistema permite subir un archivo `.xlsx` que contiene las palabras clave para relacionar productos.
 
-#### 🔄 Flujo principal:
+#### Flujo principal:
 
 1. El usuario entra al módulo de carga.  
 2. Selecciona un archivo Excel válido.  
@@ -114,7 +114,7 @@ El usuario queda registrado, actualizado o eliminado.
 4. Se procesan las filas del archivo.  
 5. Se muestra resumen de datos cargados.
 
-#### ⚠️ Excepciones:
+#### Excepciones:
 
 - Archivo con formato incorrecto → se rechaza.
 
@@ -125,7 +125,7 @@ El usuario queda registrado, actualizado o eliminado.
 **Actor principal:** Sistema  
 **Descripción:** Analiza comentarios provenientes de redes sociales y los compara con las condicionantes para detectar interés en productos.
 
-#### 🔄 Flujo principal:
+#### Flujo principal:
 
 1. Se importan comentarios desde redes sociales.  
 2. El sistema analiza cada comentario.  
@@ -139,7 +139,7 @@ El usuario queda registrado, actualizado o eliminado.
 **Actor principal:** Sistema  
 **Descripción:** Al detectar un comentario relacionado con un producto, el sistema crea un nuevo cliente potencial.
 
-#### 🔄 Flujo principal:
+#### Flujo principal:
 
 1. El sistema identifica perfil de Facebook del comentario.  
 2. Genera ID único para el cliente.  
@@ -152,7 +152,7 @@ El usuario queda registrado, actualizado o eliminado.
 **Actor principal:** Vendedor  
 **Descripción:** El vendedor accede al pedido de un cliente y modifica cantidades, productos o aplica descuentos.
 
-#### 🔄 Flujo principal:
+#### Flujo principal:
 
 1. El vendedor entra a la sección de pedidos.  
 2. Selecciona pedido del cliente.  
@@ -167,7 +167,7 @@ El usuario queda registrado, actualizado o eliminado.
 **Actor principal:** Vendedor  
 **Descripción:** Genera una cotización en PDF o Excel con el detalle del pedido.
 
-#### 🔄 Flujo principal:
+#### Flujo principal:
 
 1. El vendedor selecciona cliente.  
 2. Confirma productos a incluir.  
@@ -175,13 +175,13 @@ El usuario queda registrado, actualizado o eliminado.
 4. El sistema genera archivo con subtotal, descuento y total.  
 5. El archivo se descarga.
 
-## 📚 Reglas de Negocio
+## Reglas de Negocio
 
 A continuación se presentan las reglas de negocio que rigen el funcionamiento interno del sistema **SMAdmin**:
 
 ---
 
-### 🛡️ RN01 – Control de Accesos
+### RN01 – Control de Accesos
 Solo los usuarios registrados con rol de **Administrador** podrán:
 - Registrar nuevos usuarios  
 - Asignar roles  
@@ -191,13 +191,13 @@ Solo los usuarios registrados con rol de **Administrador** podrán:
 
 ---
 
-### 👤 RN02 – Roles del sistema
+### RN02 – Roles del sistema
 - El **Administrador** tiene acceso completo al sistema.  
 - El **Vendedor** solo puede acceder a los clientes y pedidos que le han sido asignados.  
 
 ---
 
-### 📥 RN03 – Validación de archivos
+### RN03 – Validación de archivos
 Los archivos `.xlsx` cargados deben cumplir con el formato predefinido, que incluye al menos:
 - Número de pieza  
 - Nombre del producto (código establecido)  
@@ -206,7 +206,7 @@ Los archivos `.xlsx` cargados deben cumplir con el formato predefinido, que incl
 
 ---
 
-### 🤖 RN04 – Asignación automática de clientes
+### RN04 – Asignación automática de clientes
 Cada vez que se identifica un comentario válido en redes sociales que coincide con una condicionante de búsqueda:
 - Se generará un cliente nuevo automáticamente  
 - Se le asignará un ID único  
@@ -214,26 +214,26 @@ Cada vez que se identifica un comentario válido en redes sociales que coincide 
 
 ---
 
-### 🔒 RN05 – Inmutabilidad del historial
+### RN05 – Inmutabilidad del historial
 Todas las modificaciones realizadas en el sistema deben registrarse en un historial que:
 - No puede ser editado ni borrado  
 - Incluye: usuario, fecha/hora, acción, entidad afectada, valores antes/después  
 
 ---
 
-### 💸 RN06 – Aplicación de descuentos
+### RN06 – Aplicación de descuentos
 Los descuentos aplicados a las cotizaciones **no podrán superar el 8% del total**, salvo autorización del administrador.
 
 ---
 
-### 📄 RN07 – Generación de cotización
+### RN07 – Generación de cotización
 Una cotización solo se podrá generar si:
 - El cliente tiene al menos 1 producto válido  
 - Todos los productos tienen cantidad y precio unitario definidos  
 
 ---
 
-### 🧮 RN08 – Cálculo de totales
+### RN08 – Cálculo de totales
 El cálculo del total de una cotización debe considerar:
 
 - **Subtotal** = SUMA(cantidad × precio_unitario)  
@@ -242,7 +242,7 @@ El cálculo del total de una cotización debe considerar:
 
 ---
 
-### 📥 RN09 – Descarga de cotización
+### RN09 – Descarga de cotización
 La cotización podrá ser descargada en formato **PDF** o **Excel**, y debe contener:
 - Nombre del cliente  
 - Productos seleccionados  
@@ -253,51 +253,51 @@ La cotización podrá ser descargada en formato **PDF** o **Excel**, y debe cont
 
 ---
 
-### 📊 RN10 – Generación de reportes
+### RN10 – Generación de reportes
 Los reportes de ventas deberán incluir:
 - Rango de fechas  
 - Vendedor responsable  
 - Total vendido  
 - Número de pedidos realizados  
 
-## 🧪 Bosquejo de la Aplicación
+## Bosquejo de la Aplicación
 
 A continuación se muestran las vistas principales del sistema **SMAdmin**, diseñadas como parte del prototipo funcional. Estas pantallas reflejan los módulos claves del sistema, alineados con los casos de uso y reglas de negocio definidas.
 
-### 🖥️ Dashboard principal
+### Dashboard principal
 ![Dashboard](dashboard.obd.jpg)
 
 ---
 
-### 👥 Base de datos de clientes
+### Base de datos de clientes
 ![Clientes](client_database_obd.jpg)
 
 ---
 
-### 🧑‍💼 Gestión de vendedores
+### Gestión de vendedores
 ![Vendedores](vendedores_obd.jpg)
 
 ---
 
-### 💬 Comentarios de redes sociales
+### Comentarios de redes sociales
 ![Comentarios](comments_obd.jpg)
 
 ---
 
-### 🔍 Filtro y coincidencias de productos
+### Filtro y coincidencias de productos
 ![Filtro](filtro_odb.jpg)
 
 ---
 
-### 📜 Historial de modificaciones
+### Historial de modificaciones
 ![Historial](historial_obd.jpg)
 
 ---
 
-### ⚙️ Edición de cuentas de usuario
+### Edición de cuentas de usuario
 ![Edición de cuentas](AcountEditing_obd.jpg)
 
-## 📡 Plan de Comunicación – Equipo OBD
+## Plan de Comunicación – Equipo OBD
 
 Con el fin de asegurar una colaboración efectiva, una coordinación clara y un flujo de trabajo fluido entre los miembros del equipo **OBD**, se establece el siguiente plan de comunicación:
 
@@ -305,18 +305,18 @@ Con el fin de asegurar una colaboración efectiva, una coordinación clara y un 
 
 ### 1. Canales Principales
 
-#### 🟢 WhatsApp (Canal principal)
+#### WhatsApp (Canal principal)
 - Vía principal de comunicación diaria.  
 - Para mensajes rápidos, avisos, dudas operativas o coordinación inmediata.  
 - Se espera que los mensajes sean claros y directos.  
 - ⏱️ Tiempo de respuesta ideal: dentro de las siguientes 2 horas (en horario activo del equipo).
 
-#### 🎥 Discord (Comunicación directa virtual)
+####  Discord (Comunicación directa virtual)
 - Utilizado para reuniones virtuales (videollamadas).  
 - Ideal para toma de decisiones, resolución de dudas complejas o trabajo colaborativo en tiempo real.  
 - Las reuniones serán acordadas con anticipación y se procurará respetar los horarios establecidos.
 
-#### 🏫 Sesiones de clase (Comunicación presencial)
+#### Sesiones de clase (Comunicación presencial)
 - Espacio clave para resolver dudas generales, compartir avances o coordinar tareas complejas.  
 - También se usarán para reforzar acuerdos y evaluar el progreso del grupo.
 
@@ -333,11 +333,11 @@ Con el fin de asegurar una colaboración efectiva, una coordinación clara y un 
 
 ### 3. Frecuencia y Coordinación
 
-- 📆 **Actualización de avances:** al menos una vez por semana vía WhatsApp.  
-- 📞 **Reuniones por Discord:** según necesidad o mínimo una vez por semana (día y hora por definir).  
-- ✅ **Evaluación de tareas y pendientes:** durante sesiones de clase o al término de cada etapa clave del proyecto.
+-  **Actualización de avances:** al menos una vez por semana vía WhatsApp.  
+-  **Reuniones por Discord:** según necesidad o mínimo una vez por semana (día y hora por definir).  
+-  **Evaluación de tareas y pendientes:** durante sesiones de clase o al término de cada etapa clave del proyecto.
 
-## 🧑‍💻 Guía de estilo de codificación
+##  Guía de estilo de codificación
 
 Para mantener coherencia dentro de nuestro código y nuestro trabajo implementaremos varias estrategias/normas dentro de nuestro código:
 
@@ -348,7 +348,7 @@ Para mantener coherencia dentro de nuestro código y nuestro trabajo implementar
 
 ---
 
-## 🗓️ Plan de trabajo actualizado y aprendizaje adquirido
+##  Plan de trabajo actualizado y aprendizaje adquirido
 
 Nuestro plan de trabajo se enfoca en la eficiencia del proyecto y asegura que cada uno de los integrantes del equipo tenga un trabajo por completar para que se siga mejorando el proyecto. Estos son los pasos de nuestro plan de trabajo:
 
