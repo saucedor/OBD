@@ -1,0 +1,68 @@
+{% extends "OBD/base.html" %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg justify-content-end">
+        <a class="navbar-brand" href="{% url 'index' %}">OBD</a>
+        <div>
+            <ul class="navbar-nav mr-auto">
+
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'watchlist' %}">Watch List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'inbox' %}">Inbox</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'messages' %}">Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profilePage' user.id %}"><strong>{{ user.username }}</strong></a>
+                    </li>
+
+                {% endif %}
+
+                {% if user.is_authenticated and user.role == 'client' %}
+                
+                {% elif user.is_authenticated and user.role == 'provider' %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'createPost' %}">New Post</a>
+                    </li>
+
+                {% endif %}
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Categories</a>
+                    <ul class="dropdown-menu">
+                        {% for code, name in category_choices %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'PostsByCategory' code %}" data-value="{{ code }}">{{ name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+                    </li>
+
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+

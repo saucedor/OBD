@@ -1,0 +1,48 @@
+# Entornos virtuales
+venv/
+.env/
+*.env
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Archivos de migraciones (opcional si los generas siempre de nuevo)
+**/migrations/*.pyc
+**/migrations/*.pyo
+**/migrations/__pycache__/
+**/migrations/*.py~
+
+# Archivos de configuración de VSCode
+.vscode/
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de logs
+*.log
+
+# Base de datos SQLite (opcional si no es parte del repo)
+db.sqlite3
+
+# Archivos estáticos generados
+staticfiles/
+static/
+media/
+
+# Archivos de compilación
+*.egg-info/
+build/
+dist/
+
+# Archivos de node.js (si usas npm o yarn para frontend)
+node_modules/
+
+# Archivos de coverage y pruebas
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
