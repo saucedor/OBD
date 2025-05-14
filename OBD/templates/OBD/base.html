@@ -97,17 +97,20 @@
     </style>
 </head>
 <body class="{% block class %}{% endblock %}">
-	
-    <!--include messages.html--> 
 
     {% include 'OBD/includes/messages.html' %}
 
-    <!--include header.html-->
-
+    <!--Header ocupa todo el ancho -->
     {% include 'OBD/includes/header.html' %}
 
-    {% block layout %}
-    {% endblock %}
+    <!--Layout principal: sidebar + contenido -->
+    <div class="flex">
+        {% include 'OBD/includes/sidebar.html' %}
+
+        <div class="flex-1 min-h-screen">
+            {% block layout %}{% endblock %}
+        </div>
+    </div>
 
 </body>
 </html>

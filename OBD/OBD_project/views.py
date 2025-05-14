@@ -4,6 +4,6 @@ from django.shortcuts import render
 
 def home_view(request):
 
-    return render(request, "OBD/home.html", {
+    return render(request, 'OBD_project/home.html', {
         
     })
