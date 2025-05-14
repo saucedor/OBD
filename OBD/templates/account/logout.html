@@ -1,7 +1,6 @@
 {% extends "OBD/allauth/layouts/base.html" %}
 
 {% block content %}
-<div class="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
     <h1 class="text-2xl font-bold mb-4">Cerrar sesión</h1>
     <p class="mb-4">¿Estás seguro que deseas cerrar sesión?</p>
     <form method="post" action="{% url 'account_logout' %}">
@@ -10,5 +9,4 @@
             Cerrar sesión
         </button>
     </form>
-</div>
 {% endblock %}

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.conf.urls.static import static
+from OBD_users.views import profile_view
 from OBD_project.views import *
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     path('', home_view, name="home"),
     path('accounts/', include('allauth.urls')),
     path("profile/", include('OBD_users.urls')),
+    path('@<username>', profile_view, name="profile"),
 ]
 
 #only used in development 

@@ -1,10 +1,10 @@
 {% load static %}
 
-<header class="flex items-center justify-between bg-gray-800 h-20 px-8 text-white sticky top-0 z-40">
+<header class="flex items-center justify-between h-20 px-8 bg-[#2D282C] text-white sticky top-0 z-40">
     <div>
         <a class="flex items-center gap-2" href="/">
             <img class="h-6" src="{% static 'OBD/images/logo.svg' %}" alt="Logo"/>
-            <span class="text-lg font-bold">Project Title</span>
+            <span class="text-lg font-bold">Leadly</span>
         </a>
     </div>
     <nav class="block bg-gray-800 relative">
@@ -25,15 +25,15 @@
                     <ul class="hoverlist [&>li>a]:justify-end">
                         <li><a href="{% url 'profile' %}">My Profile</a></li>
                         <li><a href="{% url 'profile-edit' %}">Edit Profile</a></li>
-            <li><a href="">Settings</a></li>
+                        <li><a href="{% url 'profile-settings' %}">Settings</a></li>
                         <li><a href="{% url 'account_logout' %}">Log Out</a></li>
                     </ul>
                 </div>
             </li>
             
             {% else %}
-    <li><a href="">Login</a></li>
-            <li><a href="">Signup</a></li>
+            <li><a href="{% url 'account_login' %}">Login</a></li>
+            <li><a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Signup</a></li>
             {% endif %}
         </ul>
     </nav>

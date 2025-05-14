@@ -6,10 +6,10 @@ from django.templatetags.static import static
 
 class Profile(models.Model):
     ROLE_CHOICES = (
-        ('client', 'Cliente'),
-        ('vendor', 'Vendor'),
+        ('cliente', 'Cliente'),
+        ('vendedor', 'Vendedor'),
     )
-    role = models.CharField(max_length=7, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=8, choices=ROLE_CHOICES)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='avatars/', null=True, blank=True)
     displayname = models.CharField(max_length=20, null=True, blank=True)
