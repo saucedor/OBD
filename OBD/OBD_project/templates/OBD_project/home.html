@@ -1,26 +1,33 @@
 {% extends 'OBD/layouts/blank.html' %}
 
 {% block layout %}
-    <div class="p-10 space-y-8">
-        <!-- Título del dashboard -->
-        <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
 
-        <!-- Grid de métricas principales -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {% include 'OBD_project/includes/campaigns.html' %}
-            {% include 'OBD_project/includes/tasks.html' %}
-            {% include 'OBD_project/includes/comments.html' %}
-            {% include 'OBD_project/includes/uploads.html' %}
-        </section>
+    {% if not user.is_authenticated %}
+        {% include "OBD_project/includes/welcome.html" %}
+    {% endif %}
 
-        <!-- Campañas recientes -->
-        <section>
-            <h2 class="text-2xl font-semibold mb-4">Campañas activas recientes</h2>
-            <div class="space-y-4">
-                <div class="bg-white p-4 rounded-lg shadow">
-                    <p class="text-gray-700">Aquí irán las campañas recientes.</p>
+    {% if user.is_authenticated %}
+        <div class="p-10 space-y-8">
+            <!-- Título del dashboard -->
+            <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+
+            <!-- Grid de métricas principales -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% include 'OBD_project/includes/campaigns.html' %}
+                {% include 'OBD_project/includes/tasks.html' %}
+                {% include 'OBD_project/includes/comments.html' %}
+                {% include 'OBD_project/includes/uploads.html' %}
+            </section>
+
+            <!-- Campañas recientes -->
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">Campañas activas recientes</h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <p class="text-gray-700">Aquí irán las campañas recientes.</p>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </div>
+            </section>
+        </div>
+    {% endif %}
 {% endblock %}
