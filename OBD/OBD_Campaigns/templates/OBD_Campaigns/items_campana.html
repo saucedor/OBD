@@ -1,0 +1,61 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+<div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h1 class="text-4xl font-extrabold text-gray-900">Inventario de {{ campana.nombre_campana }}</h1>
+                <p class="text-gray-600 mt-1">{{ campana.nombre_empresa }}</p>
+            </div>
+
+            {% if user.is_superuser or user.is_staff %}
+            <a href="{% url 'crear_item' campana.id %}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 transition duration-200">
+                <i class="fas fa-plus mr-2"></i>
+                Agregar Item
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- Tabla de productos -->
+        <div class="bg-white shadow-lg overflow-hidden border border-gray-200 rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inventario</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad Vendida</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio Unitario</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for item in productos %}
+                    <tr class="hover:bg-gray-50 transition duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap flex items-center gap-4">
+                            <img src="{{ item.foto.url }}" class="h-12 w-12 rounded object-cover border border-gray-200" alt="">
+                            <div class="text-sm font-medium text-gray-900">{{ item.nombre_producto }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if item.cantidad_disponible == 0 %}
+                                <span class="text-red-600 font-semibold">0 en stock</span>
+                            {% else %}
+                                <span class="text-gray-700 font-medium">{{ item.cantidad_disponible }} en stock</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ item.cantidad_vendida }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-green-600 font-semibold">${{ item.costo_unitario }}</td>
+                        <td class="px-6 py-4 text-gray-600 text-sm leading-relaxed">{{ item.desc_producto }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-8 text-center text-gray-500">Esta campaña aún no tiene productos registrados.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

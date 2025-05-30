@@ -22,12 +22,24 @@
             <!-- Campañas recientes -->
             <section>
                 <h2 class="text-2xl font-semibold mb-4">Campañas activas recientes</h2>
-                <div class="space-y-4">
-                    <div class="bg-white p-4 rounded-lg shadow">
-                        <p class="text-gray-700">Aquí irán las campañas recientes.</p>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for campana in campanas_activas %}
+                    <a href="{% url 'detalle_campana' campana.id %}" class="block bg-white p-4 rounded-xl shadow hover:shadow-md transition group">
+                        <div class="flex items-center gap-4">
+                            <img src="{{ campana.foto.url }}" alt="logo campaña" class="w-16 h-16 object-cover rounded-md">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{{ campana.nombre_campana }}</h3>
+                                <p class="text-sm text-gray-500">{{ campana.nombre_empresa }}</p>
+                                <p class="text-xs text-gray-400">{{ campana.fecha_creacion_campana|date:"d M Y" }}</p>
+                            </div>
+                        </div>
+                    </a>
+                    {% empty %}
+                    <p class="text-gray-500">No tienes campañas activas asignadas.</p>
+                    {% endfor %}
                 </div>
             </section>
         </div>
     {% endif %}
+
 {% endblock %}

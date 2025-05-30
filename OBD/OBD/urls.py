@@ -24,9 +24,11 @@ from OBD_project.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name="home"),
+    path('projects/', include('OBD_project.urls')),
     path('accounts/', include('allauth.urls')),
     path("profile/", include('OBD_users.urls')),
     path('@<username>', profile_view, name="profile"),
+    path('campaigns/', include('OBD_Campaigns.urls')),
 ]
 
 #only used in development 

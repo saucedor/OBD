@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'OBD_project',
     'OBD_users',
+    'OBD_Campaigns',
 ]
 
 MIDDLEWARE = [
@@ -160,7 +161,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+
 ACCOUNT_EMAIL_REQUIRED = True
 
 ACCOUNT_FORMS = {

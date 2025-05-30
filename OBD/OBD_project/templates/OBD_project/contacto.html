@@ -1,0 +1,26 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+
+<div class="p-10 text-center">
+  <h1 class="text-4xl font-bold mb-4">Contacto</h1>
+  <p class="text-lg text-gray-600 mb-6 max-w-xl mx-auto">
+    ¿Tienes alguna duda o sugerencia? Llena el formulario y te contactaremos pronto.
+  </p>
+
+  {% if exito %}
+    <div class="bg-green-100 text-green-700 p-3 rounded mb-6">
+      ¡Tu mensaje ha sido enviado con éxito!
+    </div>
+  {% endif %}
+
+  <form method="POST" class="max-w-md mx-auto bg-white p-6 rounded shadow">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="bg-violet-600 text-white px-4 py-2 rounded hover:bg-violet-700 mt-4">
+      Enviar mensaje
+    </button>
+  </form>
+</div>
+
+{% endblock %}
