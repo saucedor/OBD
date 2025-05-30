@@ -46,3 +46,5 @@ htmlcov/
 .coverage
 .tox/
 .pytest_cache/
+
+db.sqlite3
