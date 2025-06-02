@@ -31,6 +31,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://obd-production-d82b.up.railway.app"
+]
+
 
 # Application definition
 

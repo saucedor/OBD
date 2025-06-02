@@ -28,11 +28,6 @@ Thumbs.db
 # Base de datos SQLite (opcional si no es parte del repo)
 db.sqlite3
 
-# Archivos estáticos generados
-staticfiles/
-static/
-media/
-
 # Archivos de compilación
 *.egg-info/
 build/
