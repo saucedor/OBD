@@ -1,0 +1,46 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+<div class="max-w-2xl mx-auto mt-10 bg-white shadow-md rounded-lg p-6">
+    <h2 class="text-2xl font-semibold mb-4">Subir Items por .CSV</h2>
+    <form method="post" enctype="multipart/form-data" id="itemscsv-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+            Subir Archivo
+        </button>
+    </form>
+</div>
+
+<script>
+    // CRÍTICO: Prevenir que el navegador cache esta página
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+    // Limpiar formulario al cargar desde cache
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            // Página cargada desde cache o botón "atrás"
+            document.getElementById('itemscsv-form').reset();
+            
+            // Limpiar preview de imagen
+            const dropZoneContent = document.getElementById('drop-zone-content');
+            const filePreview = document.getElementById('file-preview');
+            if (dropZoneContent && filePreview) {
+                dropZoneContent.classList.remove('hidden');
+                filePreview.classList.add('hidden');
+            }
+        }
+    });
+
+    // Limpiar formulario antes de salir de la página
+    window.addEventListener('beforeunload', function() {
+        const form = document.getElementById('campana-form');
+        if (form) {
+            form.reset();
+        }
+    });
+</script>
+
+{% endblock %}

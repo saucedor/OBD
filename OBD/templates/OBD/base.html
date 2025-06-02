@@ -9,6 +9,7 @@
     <link rel="icon" type="image/x-icon" href="{% static 'OBD/favicon.ico' %}">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/htmx.org/dist/htmx.js" defer></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style type="text/tailwindcss">
         [x-cloak] { 
@@ -111,6 +112,15 @@
             {% block layout %}{% endblock %}
         </div>
     </div>
+
+    <script>
+        document.body.addEventListener("htmx:configRequest", (event) => {
+            const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]")?.value;
+            if (csrfToken) {
+                event.detail.headers["X-CSRFToken"] = csrfToken;
+            }
+        });
+    </script>
 
 </body>
 </html>

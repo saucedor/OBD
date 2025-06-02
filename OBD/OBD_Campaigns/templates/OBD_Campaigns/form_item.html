@@ -327,5 +327,36 @@
     document.querySelector('input[type="file"]').addEventListener('change', function() {
         handleFileSelect(this);
     });
+
+
+    // CRÍTICO: Prevenir que el navegador cache esta página
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+    // Limpiar formulario al cargar desde cache
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            // Página cargada desde cache o botón "atrás"
+            document.getElementById('productForm').reset();
+            
+            // Limpiar preview de imagen
+            const dropZoneContent = document.getElementById('drop-zone-content');
+            const filePreview = document.getElementById('file-preview');
+            if (dropZoneContent && filePreview) {
+                dropZoneContent.classList.remove('hidden');
+                filePreview.classList.add('hidden');
+            }
+        }
+    });
+
+    // Limpiar formulario antes de salir de la página
+    window.addEventListener('beforeunload', function() {
+        const form = document.getElementById('campana-form');
+        if (form) {
+            form.reset();
+        }
+    });
+
 </script>
 {% endblock %}

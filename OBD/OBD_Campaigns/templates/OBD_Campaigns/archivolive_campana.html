@@ -1,0 +1,77 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+<div class="max-w-6xl mx-auto p-6">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">Archivos Live</h1>
+            <p class="text-gray-600">Videos y archivos compartidos de la campaña</p>
+        </div>
+        {% if user.is_staff or user.is_superuser %}
+        <a href="{% url 'crear_archivolive' campana.id %}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow transition-all duration-200">
+            <i class="fas fa-plus mr-2"></i>
+            Agregar Archivo
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="grid gap-6">
+        {% for archivo in archivos %}
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <div class="px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-file-video text-blue-600 text-xl"></i>
+                        <div>
+                            <h2 class="text-lg font-semibold text-gray-900">{{ archivo.nombre_corto }}</h2>
+                            <p class="text-sm text-gray-500">Subido por <strong>{{ archivo.usuario.username }}</strong> el {{ archivo.fecha_subida|date:"d M Y, H:i" }}</p>
+                        </div>
+                    </div>
+                    <a href="{{ archivo.archivo.url }}" target="_blank" class="text-blue-500 hover:underline text-sm font-medium">Ver archivo</a>
+                    <a 
+                        hx-get="{% url 'editar_archivo_live' archivo.id %}" 
+                        hx-target="#modal-body" 
+                        hx-trigger="click"
+                        class="text-blue-500 hover:underline text-sm font-medium"
+                    >
+                        Editar archivo
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center text-gray-500 py-8 text-sm">No hay archivos para esta campaña.</div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'detalle_campana' campana.id %}" class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow transition-all duration-200">
+        <i class="fas fa-plus mr-2"></i>
+        Volver a la campaña
+    </a>
+
+</div>
+
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-full max-w-lg shadow-lg relative">
+        <button onclick="document.getElementById('modal').classList.remove('show')" class="absolute top-2 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+        <div id="modal-body">
+            <!-- Aquí HTMX carga el formulario -->
+        </div>
+    </div>
+</div>
+
+<script>
+    document.body.addEventListener("htmx:afterSwap", function(evt) {
+        if (evt.detail.target.id === "modal-body") {
+            document.getElementById("modal").classList.add("show");
+        }
+    });
+</script>
+
+<style>
+    #modal.show {
+        display: flex !important;
+    }
+</style>
+
+{% endblock %}

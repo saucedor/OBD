@@ -139,7 +139,7 @@
         </div>
         {% endif %}
 
-        
+        <!--Items card menu-->
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
             <div class="max-w-4xl mx-auto">
                 <!-- Header Section -->
@@ -198,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center justify-end">
-                                <span class="text-green-600 font-semibold text-sm">${{ producto.cantidad_vendida|floatformat:2 }}</span>
+                                <span class="text-green-600 font-semibold text-sm">{{ producto.cantidad_vendida|floatformat:2 }}</span>
                             </div>
                         </div>
                         {% empty %}
@@ -208,6 +208,74 @@
                 </div>
             </div>
         </div>
+
+        <!-- lives card menu -->
+        
+        <!-- Archivos Live Card Menu -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header Section -->
+                <div class="px-6 py-4 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-xl font-semibold text-gray-900 mb-1">Archivos Live</h1>
+                            <p class="text-sm text-gray-500 flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Lives recientes
+                                <span class="ml-3 bg-gray-100 px-2 py-1 rounded-full text-xs font-medium">Actualizado</span>
+                            </p>
+                        </div>
+                        <a href="{% url 'archivolive_campana' campana.id %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center">
+                            Ver Todos
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Archivos Table -->
+                <div class="bg-white">
+                    <!-- Table Header -->
+                    <div class="grid grid-cols-4 gap-6 px-6 py-3 bg-gray-50 border-b border-gray-100">
+                        <div class="text-gray-600 font-semibold text-xs uppercase tracking-wider">#</div>
+                        <div class="text-gray-600 font-semibold text-xs uppercase tracking-wider">Nombre</div>
+                        <div class="text-gray-600 font-semibold text-xs uppercase tracking-wider text-center">Usuario</div>
+                        <div class="text-gray-600 font-semibold text-xs uppercase tracking-wider text-right">Fecha</div>
+                    </div>
+
+                    <!-- Table Body -->
+                    <div class="divide-y divide-gray-100">
+                        {% for archivo in archivos_live %}
+                        <div class="grid grid-cols-4 gap-6 px-6 py-3 hover:bg-gray-50 transition-colors duration-200 group">
+                            <div class="flex items-center">
+                                <span class="text-blue-600 font-semibold text-sm">{{ forloop.counter|stringformat:"02d" }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <a href="{{ archivo.archivo.url }}" class="text-blue-600 hover:underline font-medium text-sm">{{ archivo.nombre_corto }}</a>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <a href="{% url 'profile' archivo.usuario.username %}" class="flex items-center gap-2">
+                                    {% if archivo.usuario.profile.image %}
+                                        <img src="{{ archivo.usuario.profile.image.url }}" class="w-6 h-6 rounded-full" alt="{{ archivo.usuario.username }}">
+                                    {% else %}
+                                        <div class="w-6 h-6 bg-gray-300 rounded-full"></div>
+                                    {% endif %}
+                                    <span class="text-gray-700 text-sm">{{ archivo.usuario.profile.displayname|default:archivo.usuario.username }}</span>
+                                </a>
+                            </div>
+                            <div class="flex items-center justify-end">
+                                <span class="text-gray-600 text-sm">{{ archivo.fecha_subida|date:"d M Y" }}</span>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center text-gray-500 py-8 text-sm">No hay archivos subidos para esta campaña.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>

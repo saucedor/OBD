@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Campana, Item
+from .models import Campana, Item, ArchivoLive
 
 class CampanaForm(forms.ModelForm):
     class Meta:
@@ -177,3 +177,34 @@ class ItemForm(forms.ModelForm):
                 field.widget.attrs.update({
                     'onchange': 'handleFileSelect(this)'
                 })
+
+class ArchivoLiveForm(forms.ModelForm):
+    class Meta:
+        model = ArchivoLive
+        fields = ['nombre_corto', 'archivo', 'campana']
+        widgets = {
+            'nombre_corto': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nombre descriptivo del archivo live'
+            }),
+            'archivo': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': 'video/*'
+            }),
+        }
+        labels = {
+            'nombre_corto': 'Nombre del Archivo',
+            'archivo': 'Archivo de Video',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+class CSVUploadForm(forms.Form):
+    archivo_csv = forms.FileField(
+        label='Archivo CSV',
+        widget=forms.ClearableFileInput(attrs={
+            'class': 'form-control',
+            'accept': '.csv'
+        })
+    )

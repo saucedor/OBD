@@ -1,8 +1,21 @@
 {% extends 'OBD/layouts/blank.html' %}
 
 {% block layout %}
+
 <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
     <div class="max-w-4xl mx-auto px-6">
+        
+        <!-- Mostrar mensajes de Django -->
+        {% if messages %}
+            <div class="mb-6">
+                {% for message in messages %}
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl flex items-center gap-2 mb-4">
+                        <i class="fas fa-check-circle"></i>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         
         <!-- Header -->
         <div class="text-center mb-8">
@@ -15,7 +28,7 @@
 
         <!-- Formulario -->
         <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-            <form method="POST" enctype="multipart/form-data" id="campana-form">
+            <form method="POST" enctype="multipart/form-data" id="campana-form" autocomplete="off">
                 {% csrf_token %}
                 
                 <!-- Progress Bar -->
@@ -84,7 +97,7 @@
                             <!-- Estado -->
                             <div class="space-y-2">
                                 <label for="{{ form.estado.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
-                                    <i class="fas fa-status text-orange-500 mr-2"></i>{{ form.estado.label }}
+                                    <i class="fas fa-toggle-on text-orange-500 mr-2"></i>{{ form.estado.label }}
                                 </label>
                                 {{ form.estado }}
                                 {% if form.estado.help_text %}
@@ -225,8 +238,37 @@
     </div>
 </div>
 
-<!-- JavaScript para funcionalidad mejorada -->
+<!-- JavaScript mejorado para prevenir cache y limpiar formulario -->
 <script>
+    // CRÍTICO: Prevenir que el navegador cache esta página
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+    // Limpiar formulario al cargar desde cache
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            // Página cargada desde cache o botón "atrás"
+            document.getElementById('campana-form').reset();
+            
+            // Limpiar preview de imagen
+            const dropZoneContent = document.getElementById('drop-zone-content');
+            const filePreview = document.getElementById('file-preview');
+            if (dropZoneContent && filePreview) {
+                dropZoneContent.classList.remove('hidden');
+                filePreview.classList.add('hidden');
+            }
+        }
+    });
+
+    // Limpiar formulario antes de salir de la página
+    window.addEventListener('beforeunload', function() {
+        const form = document.getElementById('campana-form');
+        if (form) {
+            form.reset();
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         // Manejo del input de archivo con drag & drop
         const dropZone = document.getElementById('drop-zone');
@@ -238,38 +280,46 @@
         const fileName = document.getElementById('file-name');
 
         // Ocultar input original
-        fileInput.style.display = 'none';
+        if (fileInput) {
+            fileInput.style.display = 'none';
+        }
 
         // Click en "seleccionar archivo"
-        selectFileBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            fileInput.click();
-        });
+        if (selectFileBtn && fileInput) {
+            selectFileBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                fileInput.click();
+            });
+        }
 
         // Cambio en input de archivo
-        fileInput.addEventListener('change', handleFileSelect);
+        if (fileInput) {
+            fileInput.addEventListener('change', handleFileSelect);
+        }
 
         // Drag & Drop
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('border-blue-500', 'bg-blue-50');
-        });
+        if (dropZone) {
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-blue-500', 'bg-blue-50');
+            });
 
-        dropZone.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-        });
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+            });
 
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                handleFileSelect();
-            }
-        });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0 && fileInput) {
+                    fileInput.files = files;
+                    handleFileSelect();
+                }
+            });
+        }
 
         function handleFileSelect() {
             const file = fileInput.files[0];
@@ -277,10 +327,12 @@
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        previewImage.src = e.target.result;
-                        fileName.textContent = file.name;
-                        dropZoneContent.classList.add('hidden');
-                        filePreview.classList.remove('hidden');
+                        if (previewImage && fileName && dropZoneContent && filePreview) {
+                            previewImage.src = e.target.result;
+                            fileName.textContent = file.name;
+                            dropZoneContent.classList.add('hidden');
+                            filePreview.classList.remove('hidden');
+                        }
                     };
                     reader.readAsDataURL(file);
                 } else {
@@ -291,49 +343,13 @@
         }
 
         // Botón cancelar
-        document.getElementById('cancelar-btn').addEventListener('click', () => {
-            if (confirm('¿Estás seguro de que quieres cancelar? Se perderán todos los cambios.')) {
-                window.history.back();
-            }
-        });
-
-        // Validación en tiempo real
-        const requiredFields = ['{{ form.nombre_campana.id_for_label }}', '{{ form.nombre_empresa.id_for_label }}'];
-        
-        requiredFields.forEach(fieldId => {
-            const field = document.getElementById(fieldId);
-            if (field) {
-                field.addEventListener('blur', validateField);
-                field.addEventListener('input', clearError);
-            }
-        });
-
-        function validateField(e) {
-            const field = e.target;
-            const value = field.value.trim();
-            
-            if (value.length < 2) {
-                showFieldError(field, 'Este campo debe tener al menos 2 caracteres');
-            }
-        }
-
-        function clearError(e) {
-            const field = e.target;
-            const errorDiv = field.parentNode.querySelector('.text-red-500');
-            if (errorDiv) {
-                errorDiv.remove();
-            }
-            field.classList.remove('border-red-500');
-        }
-
-        function showFieldError(field, message) {
-            clearError({target: field});
-            field.classList.add('border-red-500');
-            
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'text-red-500 text-sm flex items-center gap-1 mt-1';
-            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i>${message}`;
-            field.parentNode.appendChild(errorDiv);
+        const cancelarBtn = document.getElementById('cancelar-btn');
+        if (cancelarBtn) {
+            cancelarBtn.addEventListener('click', () => {
+                if (confirm('¿Estás seguro de que quieres cancelar? Se perderán todos los cambios.')) {
+                    window.location.href = '{% url "vista_campanas" %}';
+                }
+            });
         }
     });
 </script>
