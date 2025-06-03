@@ -31,5 +31,5 @@ urlpatterns = [
     path('campaigns/', include('OBD_Campaigns.urls')),
 ]
 
-#only used in development 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
