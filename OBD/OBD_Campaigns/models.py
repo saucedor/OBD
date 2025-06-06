@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -64,3 +65,31 @@ class ArchivoLive(models.Model):
 
     def __str__(self):
         return f"{self.nombre_corto} - {self.campana.nombre_campana}"
+
+#modelo de comentarios de Facebook
+class Comentario(models.Model):
+    campania = models.ForeignKey("Campana", on_delete=models.CASCADE)
+
+    perfil_nombre = models.CharField(max_length=255)
+    perfil_url = models.URLField()
+    perfil_id = models.CharField(max_length=50)
+    fecha = models.DateTimeField()
+    texto = models.TextField()
+    fuente_url = models.URLField()
+
+    contado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.perfil_nombre} - {self.texto[:30]}"
+
+class Tarea(models.Model):
+    comentario = models.ForeignKey("Comentario", on_delete=models.CASCADE, related_name="tareas")
+    asignados = models.ManyToManyField(User, limit_choices_to={"is_staff": True}, blank=True)
+
+    tipo = models.CharField(max_length=100, default="interactuar", help_text="Tipo de tarea (ej. responder, revisar)")
+    descripcion = models.TextField(blank=True)
+    completado = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Tarea para: {self.comentario.perfil_nombre}"

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import render, redirect
-from .models import Campana, Item, ArchivoLive
+from .models import Campana, Item, ArchivoLive, Comentario
 from django.shortcuts import get_object_or_404, render
 from .forms import CampanaForm, ItemForm, ArchivoLiveForm, CSVUploadForm   
 from django.http import HttpResponse
@@ -227,3 +227,14 @@ def eliminar_item(request, item_id):
     item = get_object_or_404(Item, id=item_id)
     item.delete()
     return HttpResponse('<script>window.location.reload()</script>')
+
+# Vista para ver comentarios por campaña
+@login_required
+def comentarios_por_campana(request, campania_id):
+    campana = get_object_or_404(Campana, id=campania_id)
+    comentarios = Comentario.objects.filter(campania=campana).order_by('-fecha')
+
+    return render(request, 'comentarios/comentarios_campana.html', {
+        'campana': campana,
+        'comentarios': comentarios
+    })
