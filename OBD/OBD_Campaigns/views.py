@@ -354,7 +354,7 @@ def asignar_tareas(request, campania_id):
         request.session.pop('comentarios_a_asignar', None)
         return redirect("comentarios_campana", campania_id=campania_id)
 
-    return render(request, "OBD_campaigns/asignar_tareas.html", {
+    return render(request, "OBD_Campaigns/asignar_tareas.html", {
         "campana": campana,
         "comentarios": comentarios,
         "vendedores": vendedores
@@ -469,4 +469,4 @@ def vista_archivos_live(request):
         'archivos': archivos,
         'query': query
     }
-    return render(request, 'OBD_campaigns/vista_archivos_live.html', context)
+    return render(request, 'OBD_Campaigns/vista_archivos_live.html', context)
