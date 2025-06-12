@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse 
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.decorators import login_required
@@ -6,6 +7,10 @@ from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import *
+from django.core.paginator import Paginator
+from django.db.models import Q
+from .models import Profile
+from OBD_Campaigns.models import Campana 
 
 def profile_view(request, username=None):
     if username:
@@ -85,3 +90,89 @@ def profile_delete_view(request):
         return redirect('home')
 
     return render(request, 'OBD_users/profile_delete.html')
+
+# Vista de lista de usuarios
+@login_required 
+def users_list(request):
+    query = request.GET.get("q", "")
+    role_filter = request.GET.get("role", "")
+    staff_filter = request.GET.get("staff", "")
+    superuser_filter = request.GET.get("superuser", "")
+    page = request.GET.get("page")
+
+    perfiles = Profile.objects.select_related('user').order_by('-user__date_joined')
+
+    # Filtros
+    if query:
+        perfiles = perfiles.filter(
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+        )
+    
+    if role_filter in ['cliente', 'vendedor']:
+        perfiles = perfiles.filter(role=role_filter)
+
+    if staff_filter == "true":
+        perfiles = perfiles.filter(user__is_staff=True)
+    elif staff_filter == "false":
+        perfiles = perfiles.filter(user__is_staff=False)
+
+    if superuser_filter == "true":
+        perfiles = perfiles.filter(user__is_superuser=True)
+    elif superuser_filter == "false":
+        perfiles = perfiles.filter(user__is_superuser=False)
+
+    # Paginación
+    paginator = Paginator(perfiles, 8)  # 8 perfiles por página
+    page_obj = paginator.get_page(page)
+
+    context = {
+        "page_obj": page_obj,
+        "query": query,
+        "role_filter": role_filter,
+        "staff_filter": staff_filter,
+        "superuser_filter": superuser_filter,
+    }
+
+    print("PERFILES FILTRADOS:", perfiles.count())
+
+    return render(request, "OBD_users/users_list.html", context)
+
+# Vista para el detalle de un usuario
+@login_required
+def detalle_usuario(request, pk):
+    perfil = get_object_or_404(Profile, pk=pk)
+
+    # Ejemplo: obtener campañas en las que está involucrado
+    campañas = Campana.objects.filter(comentario__perfil=perfil).distinct() if hasattr(perfil, 'comentario') else []
+
+    context = {
+        "perfil": perfil,
+        "campañas": campañas,
+    }
+    return render(request, "OBD_users/detalle_usuario.html", context)
+
+# Vista para editar un usuario
+@login_required
+@staff_member_required
+def editar_usuario(request, pk):
+    perfil = get_object_or_404(Profile, pk=pk)
+    user = perfil.user
+
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=perfil)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('detalle_usuario', pk=pk)
+    else:
+        user_form = UserForm(instance=user)
+        profile_form = ProfileForm(instance=perfil)
+
+    return render(request, "OBD_users/editar_usuario.html", {
+        "user_form": user_form,
+        "profile_form": profile_form,
+        "perfil": perfil
+    })

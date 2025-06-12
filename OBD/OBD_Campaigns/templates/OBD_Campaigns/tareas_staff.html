@@ -1,0 +1,26 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+
+<h2 class="text-2xl font-bold mb-6">Tus Campañas</h2>
+<ul class="list-disc pl-5 mb-6">
+    {% for campana in campanas %}
+    <li>{{ campana.nombre_campana }}</li>
+    {% endfor %}
+</ul>
+
+<h2 class="text-2xl font-bold mb-6">Tus Tareas</h2>
+<ul class="list-disc pl-5">
+    {% for tarea in tareas %}
+    <li>
+        {{ tarea.descripcion }} - 
+        {% if tarea.completado %}
+        ✅ Completada
+        {% else %}
+        ⏳ Pendiente
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

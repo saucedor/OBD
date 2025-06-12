@@ -1,0 +1,58 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+
+<div class="max-w-7xl mx-auto px-6 py-10">
+    <h1 class="text-3xl font-bold mb-6">Gestión de Comentarios</h1>
+
+    <!-- Filtro -->
+    <form method="get" class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 bg-white p-6 rounded-lg shadow">
+        <input type="text" name="usuario" value="{{ request.GET.usuario }}" placeholder="Usuario" class="input border p-2 rounded-md" />
+        <input type="text" name="contenido" value="{{ request.GET.contenido }}" placeholder="Contenido" class="input border p-2 rounded-md" />
+        <input type="date" name="fecha" value="{{ request.GET.fecha }}" class="input border p-2 rounded-md" />
+        <select name="campana" class="input border p-2 rounded-md">
+            <option value="">Todas las campañas</option>
+            {% for c in campanas %}
+                <option value="{{ c.id }}" {% if request.GET.campana == c.id|stringformat:"s" %}selected{% endif %}>{{ c.nombre_campana }}</option>
+            {% endfor %}
+        </select>
+        <div class="flex gap-2">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow font-semibold">Filtrar</button>
+            <a href="{% url 'lista_comentarios' %}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded shadow font-semibold">Limpiar</a>
+        </div>
+    </form>
+
+    <!-- Lista de comentarios -->
+    <div class="grid gap-4">
+        {% for comentario in comentarios %}
+            {% if user.is_superuser %}
+                <a href="{% url 'asignar_tareas' comentario.campania.id %}" 
+                class="block bg-white p-6 rounded shadow border hover:bg-gray-100 cursor-pointer transition">
+            {% else %}
+                <div class="bg-white p-6 rounded shadow border">
+            {% endif %}
+
+                <div class="flex justify-between items-center mb-2">
+                    <div>
+                        <p class="text-gray-800 font-bold">{{ comentario.perfil_nombre }}</p>
+                        <p class="text-sm text-gray-500">{{ comentario.fecha|date:"d M Y, H:i" }}</p>
+                    </div>
+                    <span class="text-sm bg-blue-100 text-blue-600 font-semibold px-3 py-1 rounded">
+                        {{ comentario.campania.nombre_campana }}
+                    </span>
+                </div>
+                <p class="text-gray-700">{{ comentario.texto }}</p>
+
+            {% if user.is_superuser %}
+                </a>
+            {% else %}
+                </div>
+            {% endif %}
+        {% empty %}
+            <p class="text-center text-gray-500">No se encontraron comentarios con esos filtros.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

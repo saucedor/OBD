@@ -1,0 +1,48 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+
+<div class="max-w-xl mx-auto bg-white p-6 rounded shadow mt-10">
+    <h1 class="text-xl font-bold text-gray-800 mb-4">Subir Comentarios para {{ campana.nombre_campana }}</h1>
+
+    <form id="comentarios-form" method="post" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Subir Comentarios
+        </button>
+    </form>
+</div>
+
+<script>
+    // CRÍTICO: Prevenir que el navegador cache esta página
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+    // Limpiar formulario al cargar desde cache
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            // Página cargada desde cache o botón "atrás"
+            document.getElementById('comentarios-form').reset();
+            
+            // Limpiar preview de imagen
+            const dropZoneContent = document.getElementById('drop-zone-content');
+            const filePreview = document.getElementById('file-preview');
+            if (dropZoneContent && filePreview) {
+                dropZoneContent.classList.remove('hidden');
+                filePreview.classList.add('hidden');
+            }
+        }
+    });
+
+    // Limpiar formulario antes de salir de la página
+    window.addEventListener('beforeunload', function() {
+        const form = document.getElementById('campana-form');
+        if (form) {
+            form.reset();
+        }
+    });
+</script>
+
+{% endblock %}

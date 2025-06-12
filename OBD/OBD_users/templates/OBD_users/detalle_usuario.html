@@ -1,0 +1,52 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+<div class="max-w-4xl mx-auto px-6 py-10">
+  <div class="bg-white p-8 rounded-lg shadow">
+    <div class="flex items-center gap-6">
+      <img src="{{ perfil.avatar }}" class="h-20 w-20 rounded-full border" />
+      <div>
+        <h1 class="text-2xl font-bold">{{ perfil.name }}</h1>
+        <p class="text-gray-600">Username: {{ perfil.user.username }}</p>
+        <p class="text-gray-600">Email: {{ perfil.user.email }}</p>
+        <p class="text-gray-600">Rol: {{ perfil.get_role_display }}</p>
+        <p class="text-gray-600">Staff: {{ perfil.user.is_staff|yesno:"Sí,No" }}</p>
+        <p class="text-gray-600">Superuser: {{ perfil.user.is_superuser|yesno:"Sí,No" }}</p>
+        <p class="text-gray-600">Fecha de creación: {{ perfil.user.date_joined|date:"d M Y, H:i" }}</p>
+      </div>
+    </div>
+
+    {% if perfil.info %}
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-2">Información adicional</h2>
+        <p class="text-gray-700 whitespace-pre-line">{{ perfil.info }}</p>
+      </div>
+    {% endif %}
+
+    {% if campañas %}
+      <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-2">Campañas relacionadas</h2>
+        <ul class="list-disc list-inside text-gray-700">
+          {% for campana in campañas %}
+            <li>{{ campana.nombre_campana }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if request.user.is_superuser %}
+    <div class="mt-6">
+        <a href="{% url 'editar_usuario' perfil.id %}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded shadow">
+        Editar usuario
+        </a>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'users-list' %}" class="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold shadow transition-all duration-200">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Volver a Usuarios
+    </a>
+
+  </div>
+</div>
+{% endblock %}

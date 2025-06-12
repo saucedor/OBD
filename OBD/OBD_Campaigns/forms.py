@@ -208,3 +208,13 @@ class CSVUploadForm(forms.Form):
             'accept': '.csv'
         })
     )
+
+class CSVComentarioForm(forms.Form):
+    csv_file = forms.FileField(
+        label="Archivo CSV",
+        help_text="Sube un archivo .csv con los comentarios",
+        widget=forms.FileInput(attrs={
+            "accept": ".csv",
+            "class": "text-sm text-gray-700"
+        })
+    )

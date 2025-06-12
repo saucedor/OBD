@@ -1,0 +1,72 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+
+<div class="max-w-7xl mx-auto px-6 py-10">
+  <!-- Filtros -->
+  <form method="get" class="mb-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+    <input type="text" name="q" value="{{ query }}" placeholder="Buscar por nombre..." class="p-3 rounded border border-gray-300" />
+
+    <select name="role" class="p-3 rounded border border-gray-300">
+      <option value="">Todos los roles</option>
+      <option value="cliente" {% if role_filter == "cliente" %}selected{% endif %}>Cliente</option>
+      <option value="vendedor" {% if role_filter == "vendedor" %}selected{% endif %}>Vendedor</option>
+    </select>
+
+    <select name="staff" class="p-3 rounded border border-gray-300">
+      <option value="">Staff o no staff</option>
+      <option value="true" {% if staff_filter == "true" %}selected{% endif %}>Staff</option>
+      <option value="false" {% if staff_filter == "false" %}selected{% endif %}>No staff</option>
+    </select>
+
+    <select name="superuser" class="p-3 rounded border border-gray-300">
+      <option value="">Superuser o no</option>
+      <option value="true" {% if superuser_filter == "true" %}selected{% endif %}>Superuser</option>
+      <option value="false" {% if superuser_filter == "false" %}selected{% endif %}>No superuser</option>
+    </select>
+
+    <div class="col-span-full text-right">
+      <button type="submit" class="mt-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Filtrar</button>
+    </div>
+  </form>
+
+  <!-- Perfiles por rol -->
+    <h2 class="text-2xl font-semibold mb-4 mt-10">Todos los usuarios</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for perfil in page_obj %}
+        <div class="bg-white p-6 border border-gray-200 rounded-lg shadow hover:shadow-md transition">
+        <img src="{{ perfil.avatar }}" alt="Avatar" class="h-16 w-16 rounded-full mb-3">
+        <a href="{% url 'detalle_usuario' perfil.id %}" class="font-semibold text-lg text-blue-600 hover:underline">
+            {{ perfil.name }}
+        </a>
+        <p class="text-sm text-gray-600">Rol: {{ perfil.get_role_display }}</p>
+        <p class="text-sm text-gray-600">Staff: {{ perfil.user.is_staff|yesno:"Sí,No" }}</p>
+        <p class="text-sm text-gray-600">Superuser: {{ perfil.user.is_superuser|yesno:"Sí,No" }}</p>
+        <p class="text-sm text-gray-400 mt-2">Creado: {{ perfil.user.date_joined|date:"d M Y H:i" }}</p>
+        </div>
+    {% empty %}
+        <p>No se encontraron perfiles.</p>
+    {% endfor %}
+    </div>
+
+  <!-- Paginación -->
+  <div class="mt-10 flex justify-center space-x-2">
+    {% if page_obj.has_previous %}
+      <a href="?{% if query %}q={{ query }}&{% endif %}{% if role_filter %}role={{ role_filter }}&{% endif %}
+                {% if staff_filter %}staff={{ staff_filter }}&{% endif %}
+                {% if superuser_filter %}superuser={{ superuser_filter }}&{% endif %}
+                page={{ page_obj.previous_page_number }}"
+         class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Anterior</a>
+    {% endif %}
+    <span class="px-4 py-2 bg-blue-600 text-white rounded">{{ page_obj.number }}</span>
+    {% if page_obj.has_next %}
+      <a href="?{% if query %}q={{ query }}&{% endif %}{% if role_filter %}role={{ role_filter }}&{% endif %}
+                {% if staff_filter %}staff={{ staff_filter }}&{% endif %}
+                {% if superuser_filter %}superuser={{ superuser_filter }}&{% endif %}
+                page={{ page_obj.next_page_number }}"
+         class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Siguiente</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

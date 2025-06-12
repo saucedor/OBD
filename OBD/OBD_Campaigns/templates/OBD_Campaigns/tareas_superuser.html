@@ -1,0 +1,30 @@
+{% extends 'OBD/layouts/blank.html' %}
+
+{% block layout %}
+
+<div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-6xl mx-auto px-6 space-y-8">
+
+        <h2 class="text-3xl font-bold text-gray-900 mb-8">Staff Asignado</h2>
+
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {% for perfil in staff_profiles %}
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all border border-gray-200 p-6 text-center">
+                <img src="{{ perfil.avatar }}" alt="Avatar" class="w-24 h-24 mx-auto rounded-full border mb-4 object-cover">
+                <h3 class="text-lg font-semibold text-gray-800">{{ perfil.name }}</h3>
+                <p class="text-sm text-gray-500 italic mb-2">{{ perfil.role|capfirst }}</p>
+
+                <a href="{% url 'detalle_staff' perfil.user.id %}" 
+                class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow transition">
+                    Ver detalles
+                </a>
+            </div>
+            {% empty %}
+            <p class="text-gray-600 col-span-full text-center">No hay perfiles de staff disponibles.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>  
+
+{% endblock %}

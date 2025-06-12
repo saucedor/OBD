@@ -8,16 +8,25 @@
             <ul class="space-y-1 px-4 text-base">
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'home' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Dashboard</a></li>
-                    <li><a href="#" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Usuarios</a></li>
                     <li><a href="{% url 'vista_campanas' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Campañas</a></li>
-                    <li><a href="#" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Comentarios</a></li>
-                    {% if user_profile.role == 'vendedor' %}
-                        <li><a href="#" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Clientes</a></li>
+                    {% if user.is_staff or user.is_superuser %}
+                        <li><a href="{% url 'users-list' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Usuarios</a></li>
                     {% elif user_profile.role == 'cliente' %}
                         <li><a href="#" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Historial</a></li>
                     {% endif %}
-                    <li><a href="#" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Tareas</a></li>
-                    <li><a href="#" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Archivos</a></li>
+                    <li><a href="{% url 'lista_comentarios' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Comentarios</a></li>
+                    <li>
+                        {% if user.is_superuser %}
+                            <a href="{% url 'tareas_superuser' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">
+                                Tareas
+                            </a>
+                        {% elif user.is_staff %}
+                            <a href="{% url 'tareas_staff' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">
+                                Tareas
+                            </a>
+                        {% endif %}
+                    </li>
+                    <li><a href="{% url 'vista_archivos_live' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Archivos</a></li>
                 {% else %}
                     <li><a href="{% url 'about' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Acerca de Nosotros</a></li>
                     <li><a href="{% url 'contacto' %}" class="block py-2 px-4 rounded hover:bg-[#3C3B39]">Contacto</a></li>
